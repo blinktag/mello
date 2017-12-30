@@ -5267,7 +5267,7 @@ tbody.collapse.in {
 .navbar {
   position: relative;
   min-height: 50px;
-  margin-bottom: 22px;
+  margin-bottom: 0;
   border: 1px solid transparent;
 }
 
@@ -8348,5 +8348,17 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+
+#app > .row {
+  margin: 0;
+}
+
+h4 {
+  color: #fff;
+}
+
+.navbar-right {
+  margin-right: 0;
 }
 
