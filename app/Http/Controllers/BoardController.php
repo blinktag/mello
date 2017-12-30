@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Board;
 
 class BoardController extends Controller
 {
@@ -51,7 +52,9 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        //
+        $board = Board::find($id);
+
+        return view('board.show', compact('board'));
     }
 
     /**

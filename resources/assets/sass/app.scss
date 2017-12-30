@@ -7,3 +7,15 @@
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+#app > .row {
+    margin: 0;
+}
+
+h4 {
+    color: #fff;
+}
+
+.navbar-right {
+    margin-right: 0;
+}
