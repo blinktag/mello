@@ -1,16 +1,10 @@
 <template>
-    <div>
+    <div class="row">
         <div v-for="(list, index) in lists">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ list.name }}
-                </div>
-                <div  class="panel-body">
-                    items go here
-                </div>
-            </div>
+            <list :id="list.id"></list>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -25,7 +19,10 @@ export default {
         return {
             user_id: '',
             name: '',
-            lists: []
+            lists: [
+                {id: 1, name: 'Marks Tasks'},
+                {id: 2, name: 'Someones elses tasks'}
+            ]
         }
     },
 
