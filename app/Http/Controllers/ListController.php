@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Board;
+use App\TaskList;
 
-class BoardController extends Controller
+class ListController extends Controller
 {
 
     public function __construct()
@@ -52,13 +52,7 @@ class BoardController extends Controller
      */
     public function show($id)
     {
-        $board = Board::find($id);
-
-        if (request()->wantsJson()) {
-            return $board;
-        }
-
-        return view('board.show', compact('board'));
+        //
     }
 
     /**
