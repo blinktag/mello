@@ -42,7 +42,17 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'board_id' => 'required|exists:cards,id',
+            'name'     => 'required'
+        ]);
+
+        $card = Card::create([
+            'board_id' => request('board_id'),
+            'name'     => request('name')
+        ]);
+
+        return new CardResource($card);
     }
 
     /**
@@ -75,13 +85,20 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Card $card)
     {
-        //
+        $this->validate(request(), [
+            'id' => 'required',
+            'name' => 'required'
+        ]);
+
+        $card->name = request('name');
+        $card->save();
+
+        return new CardResource($card);
     }
 
     /**

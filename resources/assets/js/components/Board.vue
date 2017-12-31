@@ -3,18 +3,20 @@
         <draggable v-model="cards">
             <card v-for="(card, index) in cards" :key="card.id" :id="card.id"></card>
         </draggable>
+        <add-card :boardId="id"></add-card>
     </div>
 
 </template>
 
 <script>
 import Card from './Card.vue';
+import AddCard from './AddCard.vue';
 import draggable from 'vuedraggable';
 
 export default {
     props: ['id'],
 
-    components: { Card, draggable },
+    components: { Card, AddCard, draggable },
 
     data() {
         return {

@@ -1,8 +1,11 @@
 <template>
     <div class="col-sm-3" v-on:mouseover="mouseOver" v-on:mouseout="mouseOut">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                {{ name }}
+            <div class="panel-heading" @dblclick="show_title_form = true">
+                <span v-if="!show_title_form">{{ name }}</span>
+                <span v-if="show_title_form">
+                    <input type="text" class="form-control input-sm" v-on:keyup.enter="update" v-model="name" />
+                </span>
             </div>
             <div class="panel-body">
                 <ul class="list-group mb0">
@@ -32,6 +35,7 @@ export default {
     data() {
         return {
             new_item: '',
+            show_title_form: false,
             show_add: false,
             name: '',
             items: []
@@ -71,6 +75,18 @@ export default {
                  .then((response) => {
                     //
                  });
+        },
+
+        update() {
+            const data = {
+                id: this.id,
+                name: this.name
+            }
+            axios.put('/card/' + this.id, data)
+                 .then((response) => {
+                    this.name = response.data.data.name;
+                 });
+             this.show_title_form = false;
         },
 
         mouseOver() {
