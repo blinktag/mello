@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TaskListsTableSeeder extends Seeder
+class CardsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class TaskListsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\TaskList::class, 3)->create([
+        factory(App\Card::class, 3)->create([
             'board_id' => function() {
                 return factory(App\Board::class)->create()->id;
             }

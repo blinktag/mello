@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Card;
 
 class CardController extends Controller
 {
@@ -46,13 +47,21 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Card $card)
     {
-        //
+        if (auth()->id() != $card->board->user_id) {
+            return response(null, 404);
+        }
+
+        return response()->json([
+            'name'  => $card->name,
+            'items' => $card->tasks
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

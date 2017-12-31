@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-3">
+    <div class="col-sm-3" v-on:mouseover="mouseOver" v-on:mouseout="mouseOut">
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{ name }}
@@ -13,7 +13,7 @@
                     </draggable>
                 </ul>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" v-if="show_add == true">
                 <input type="text" class="form-control input-sm" placeholder="Add new item" v-on:keyup.enter="addItem" v-model="new_item" />
             </div>
         </div>
@@ -22,6 +22,7 @@
 
 <script>
 import draggable from 'vuedraggable';
+import axios from 'axios';
 
 export default {
     props: ['id'],
@@ -31,20 +32,40 @@ export default {
     data() {
         return {
             new_item: '',
-            list_id: 0,
-            name: 'some tasks',
-            items: [
-                {id: 1, name: 'Mark'},
-                {id: 2, name: 'Smith'},
-            ]
+            show_add: false,
+            name: '',
+            items: []
         }
     },
 
+    created() {
+        this.fetch();
+    },
+
     methods: {
+        fetch() {
+            axios.get("/card/" + this.id)
+                 .then((response) => {
+                    this.name = response.data.name;
+                    this.items = response.data.items;
+                 });
+        },
+
         addItem() {
             const last_id = this.items[this.items.length-1].id + 1;
             this.items.push({id: last_id, name: this.new_item});
             this.new_item = '';
+        },
+
+        saveState() {
+            // use items index for view order
+        },
+
+        mouseOver() {
+            this.show_add = true;
+        },
+        mouseOut() {
+            this.show_add = false;
         }
     }
 }
