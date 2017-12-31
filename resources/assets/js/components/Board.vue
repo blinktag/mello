@@ -31,8 +31,8 @@ export default {
         fetch() {
             axios.get("/board/" + this.id)
                  .then((response) => {
-                    this.name = response.data.name;
-                    this.cards = response.data.cards;
+                    this.name  = response.data.data.name;
+                    this.cards = response.data.data.cards;
                  });
         }
     }

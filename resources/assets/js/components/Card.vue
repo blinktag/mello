@@ -46,8 +46,8 @@ export default {
         fetch() {
             axios.get("/card/" + this.id)
                  .then((response) => {
-                    this.name = response.data.name;
-                    this.items = response.data.items;
+                    this.name = response.data.data.name;
+                    this.items = response.data.data.items;
                  });
         },
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Card;
+use App\Http\Resources\CardResource;
 
 class CardController extends Controller
 {
@@ -56,10 +57,7 @@ class CardController extends Controller
             return response(null, 404);
         }
 
-        return response()->json([
-            'name'  => $card->name,
-            'items' => $card->tasks
-        ]);
+        return new CardResource($card);
     }
 
 

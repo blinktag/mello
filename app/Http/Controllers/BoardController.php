@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Board;
+use App\Http\Resources\BoardResource;
 
 class BoardController extends Controller
 {
@@ -55,10 +56,7 @@ class BoardController extends Controller
         $board = Board::find($id);
 
         if (request()->wantsJson()) {
-            return response()->json([
-                'name'  => $board->name,
-                'cards' => $board->cards
-            ]);
+            return new BoardResource($board);
         }
 
         return view('board.show', compact('board'));
