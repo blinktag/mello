@@ -11,9 +11,10 @@ class TaskListsTableSeeder extends Seeder
      */
     public function run()
     {
-        return [
-            'board_id' => 1,
-            'name'     => 'Tasks'
-        ];
+        factory(App\TaskList::class, 3)->create([
+            'board_id' => function() {
+                return factory(App\Board::class)->create()->id;
+            }
+        ]);
     }
 }

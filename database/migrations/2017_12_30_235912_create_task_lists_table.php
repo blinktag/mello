@@ -13,7 +13,7 @@ class CreateTaskListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lists', function (Blueprint $table) {
+        Schema::create('task_lists', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('board_id');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateTaskListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lists');
+        Schema::dropIfExists('task_lists');
     }
 }
