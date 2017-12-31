@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use Illuminate\Http\Request;
-use App\Board;
+use Illuminate\Http\JsonResponse;
 
-class BoardController extends Controller
+class TaskController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -41,36 +36,41 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'task_list_id' => 'required|exists:task_lists,id',
+            'name'         => 'required|string'
+        ]);
+
+        $task = Task::create([
+            'task_list_id' => request('task_list_id'),
+            'name'         => request('name')
+        ]);
+
+        return $task;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        $board = Board::find($id);
-
-        if (request()->wantsJson()) {
-            return response()->json([
-                'name'  => $board->name,
-                'cards' => $board->cards
-            ]);
+        if (auth()->id() != $task->card->board->user_id) {
+            return response(null, 404);
         }
 
-        return view('board.show', compact('board'));
+        return $task;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
         //
     }
@@ -79,10 +79,10 @@ class BoardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
         //
     }
@@ -90,10 +90,10 @@ class BoardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
         //
     }

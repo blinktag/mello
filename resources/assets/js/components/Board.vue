@@ -1,37 +1,38 @@
 <template>
     <div class="row">
-        <draggable v-model="lists">
-            <list v-for="(list, index) in lists" :key="list.id" :id="list.id"></list>
+        <draggable v-model="cards">
+            <card v-for="(card, index) in cards" :key="card.id" :id="card.id"></card>
         </draggable>
     </div>
 
 </template>
 
 <script>
-import List from './List.vue';
+import Card from './Card.vue';
 import draggable from 'vuedraggable';
 
 export default {
     props: ['id'],
 
-    components: { List, draggable },
+    components: { Card, draggable },
 
     data() {
         return {
-            user_id: '',
             name: '',
-            lists: [
-                {id: 1, name: 'Marks Tasks'},
-                {id: 2, name: 'Someones elses tasks'}
-            ]
+            cards: []
         }
+    },
+
+    created() {
+        this.fetch();
     },
 
     methods: {
         fetch() {
             axios.get("/board/" + this.id)
                  .then((response) => {
-                    this.data = response.data;
+                    this.name = response.data.name;
+                    this.cards = response.data.cards;
                  });
         }
     }
