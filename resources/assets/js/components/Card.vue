@@ -6,7 +6,7 @@
             </div>
             <div class="panel-body">
                 <ul class="list-group mb0">
-                    <draggable v-model="items">
+                    <draggable v-model="items" @change="saveState">
                         <li class="list-group-item" v-for="item in items" :key="item.id">
                             {{item.name}}
                         </li>
@@ -46,19 +46,31 @@ export default {
         fetch() {
             axios.get("/card/" + this.id)
                  .then((response) => {
-                    this.name = response.data.data.name;
+                    this.name  = response.data.data.name;
                     this.items = response.data.data.items;
                  });
         },
 
         addItem() {
-            const last_id = this.items[this.items.length-1].id + 1;
-            this.items.push({id: last_id, name: this.new_item});
+            const data = {
+                'card_id': this.id,
+                'name': this.new_item
+            }
+            axios.post('/task/', data).then((response) => {
+                let last_id = 0;
+                if (this.items.length > 0) {
+                    let last_id = this.items[this.items.length-1].id + 1;
+                }
+                this.items.push({id: response.data.data.id, name: data.name});
+            });
             this.new_item = '';
         },
 
         saveState() {
-            // use items index for view order
+            axios.put('/task/update-order/', {items: this.items})
+                 .then((response) => {
+                    //
+                 });
         },
 
         mouseOver() {

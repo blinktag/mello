@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Resources\TaskResource;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -37,16 +39,22 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'task_list_id' => 'required|exists:task_lists,id',
-            'name'         => 'required|string'
+            'card_id' => 'required|exists:cards,id',
+            'name'    => 'required|string'
         ]);
+
+        // static model method?
+        $max_order_key = DB::table('tasks')
+                            ->where('card_id', request('card_id'))
+                            ->max('order_key');
 
         $task = Task::create([
-            'task_list_id' => request('task_list_id'),
-            'name'         => request('name')
+            'card_id'   => request('card_id'),
+            'name'      => request('name'),
+            'order_key' => ++$max_order_key
         ]);
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
@@ -96,5 +104,28 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $tasks = collect(request('items'));
+
+        // Loop over each task and update order_key column to be the array
+        // index from the posted data
+        $tasks->each(function($task_data, $key) {
+
+            $task = Task::find($task_data['id']);
+
+            // Validate task belongs to us
+            if (auth()->id() != $task->card->board->user_id) {
+                return;
+            }
+
+            // Update order_key and save
+            $task->order_key = $key;
+            $task->save();
+        });
+
+        return response()->json(['data' => ['success' => true]]);
     }
 }

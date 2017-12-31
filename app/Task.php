@@ -11,7 +11,8 @@ class Task extends Model
         'name',
         'card_id',
         'due_on',
-        'is_done'
+        'is_done',
+        'order_key'
     ];
 
     public function card()
