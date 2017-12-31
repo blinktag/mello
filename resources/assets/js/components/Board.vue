@@ -1,19 +1,20 @@
 <template>
     <div class="row">
-        <div v-for="(list, index) in lists">
-            <list :id="list.id"></list>
-        </div>
+        <draggable v-model="lists">
+            <list v-for="(list, index) in lists" :key="list.id" :id="list.id"></list>
+        </draggable>
     </div>
 
 </template>
 
 <script>
 import List from './List.vue';
+import draggable from 'vuedraggable';
 
 export default {
     props: ['id'],
 
-    components: { List },
+    components: { List, draggable },
 
     data() {
         return {
