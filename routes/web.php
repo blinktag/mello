@@ -19,3 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/board', 'BoardController');
+Route::resource('/task', 'TaskController');
+Route::resource('/card', 'CardController');
