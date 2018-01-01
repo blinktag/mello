@@ -47,6 +47,17 @@
 .panel-body {
     padding-top: 0;
 }
+
+.list-group-item {
+    margin: 2px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.panel-footer {
+    border-top: 0;
+}
 </style>
 
 <script>
