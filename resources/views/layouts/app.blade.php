@@ -48,7 +48,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <img src="{{ auth()->user()->getGravatarUrl() }}" class="img-circle" width="24" />
                                 </a>
 
                                 <ul class="dropdown-menu">

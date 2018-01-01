@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -27,8 +28,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function boards()
+    public function boards(): HasMany
     {
         return $this->hasMany(Board::class);
+    }
+
+    /**
+     * Generate gravatar URL for the user
+     *
+     * @return string
+     */
+    public function getGravatarUrl(): string
+    {
+        $hash = md5(strtolower($this->email));
+        return "https://www.gravatar.com/avatar/{$hash}";
     }
 }
