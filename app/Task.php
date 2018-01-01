@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
@@ -15,7 +16,7 @@ class Task extends Model
         'order_key'
     ];
 
-    public function card()
+    public function card(): BelongsTo
     {
         return $this->belongsTo(Card::class);
     }
