@@ -1,10 +1,10 @@
 <template>
     <div class="col-sm-3" v-on:mouseover="mouseOver" v-on:mouseout="mouseOut">
         <div class="panel panel-default">
-            <div class="panel-heading" @dblclick="showTitleForm">
+            <div class="panel-heading" @click="toggleTitleForm">
                 <span v-if="!show_title_form">{{ name }}</span>
                 <span v-if="show_title_form">
-                    <input type="text" class="form-control input-sm" v-on:keyup.enter="update" v-on:keyup.esc="showTitleForm" v-model="name" />
+                    <input type="text" ref="titlefield" class="form-control input-sm" v-on:keyup.enter="update" v-on:keyup.esc="toggleTitleForm" v-model="name" />
                 </span>
             </div>
             <div class="panel-body">
@@ -134,8 +134,19 @@ export default {
             this.show_add = false;
         },
 
-        showTitleForm() {
+        toggleTitleForm() {
+
             this.show_title_form = !this.show_title_form;
+
+            // Use nextTick because the element might not be in the DOM yet
+            this.$nextTick(() => {
+                if (this.$refs.titlefield) {
+                    this.$refs.titlefield.focus();
+                    this.$refs.titlefield.select();
+                }
+            })
+
+            //this.$refs.titlefield.$el.focus();
         }
     }
 }
