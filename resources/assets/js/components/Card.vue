@@ -1,10 +1,10 @@
 <template>
     <div class="col-sm-3" v-on:mouseover="mouseOver" v-on:mouseout="mouseOut">
         <div class="panel panel-default">
-            <div class="panel-heading" @dblclick="show_title_form = true">
+            <div class="panel-heading" @dblclick="showTitleForm">
                 <span v-if="!show_title_form">{{ name }}</span>
                 <span v-if="show_title_form">
-                    <input type="text" class="form-control input-sm" v-on:keyup.enter="update" v-model="name" />
+                    <input type="text" class="form-control input-sm" v-on:keyup.enter="update" v-on:keyup.esc="showTitleForm" v-model="name" />
                 </span>
             </div>
             <div class="panel-body">
@@ -22,6 +22,32 @@
         </div>
     </div>
 </template>
+
+<style>
+.panel {
+    width: 100%;
+    height: fit-content;
+}
+
+.list-group-item {
+    padding: 5px 15px;
+}
+
+.panel-heading {
+    color: #333;
+    background-color: #e2e4e6 !important;
+    font-weight: bold;
+    border: 0;
+}
+
+.panel-default {
+    background-color: #e2e4e6;
+}
+
+.panel-body {
+    padding-top: 0;
+}
+</style>
 
 <script>
 import draggable from 'vuedraggable';
@@ -92,8 +118,13 @@ export default {
         mouseOver() {
             this.show_add = true;
         },
+
         mouseOut() {
             this.show_add = false;
+        },
+
+        showTitleForm() {
+            this.show_title_form = !this.show_title_form;
         }
     }
 }

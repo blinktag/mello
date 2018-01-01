@@ -4,6 +4,18 @@
     </div>
 </template>
 
+<style>
+.form-control {
+    background-color: rgba(0, 0, 0, 0.12);
+    border: 0;
+    color: #fff;
+}
+
+.form-control:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+</style>
+
 <script>
 import axios from 'axios';
 
@@ -26,7 +38,8 @@ export default {
 
             axios.post('/card/', data)
                  .then((response) => {
-                    // somehow talk to parent board.vue, vuex?
+                    this.name = '';
+                    this.$emit('new-card', response.data.data);
                  });
 
         }
