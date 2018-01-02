@@ -69,7 +69,7 @@ class TaskController extends Controller
             return response(null, 404);
         }
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**

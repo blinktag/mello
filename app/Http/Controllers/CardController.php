@@ -43,7 +43,7 @@ class CardController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'board_id' => 'required|exists:cards,id',
+            'board_id' => 'required|exists:boards,id',
             'name'     => 'required'
         ]);
 

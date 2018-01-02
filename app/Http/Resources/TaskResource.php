@@ -15,9 +15,11 @@ class TaskResource extends Resource
     public function toArray($request)
     {
         return [
-            'id'     => $this->id,
-            'name'   => $this->name,
-            'due_on' => $this->due_on
+            'id'        => $this->id,
+            'card_id'   => $this->card_id,
+            'name'      => $this->name,
+            'due_on'    => $this->due_on,
+            'order_key' => $this->order_key
         ];
     }
 }

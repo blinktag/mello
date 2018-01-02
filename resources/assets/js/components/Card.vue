@@ -145,8 +145,6 @@ export default {
                     this.$refs.titlefield.select();
                 }
             })
-
-            //this.$refs.titlefield.$el.focus();
         }
     }
 }
